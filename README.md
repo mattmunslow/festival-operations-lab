@@ -23,13 +23,13 @@ In the [Foundry portal](https://ai.azure.com), open your project, then:
 
 ## 2. Get the code
 
-In VS Code, open the Command Palette (`Ctrl+Shift+P`, or `Cmd+Shift+P` on macOS), run **Git: Clone**, paste the repo URL and open the cloned folder.
+In VS Code, open the Command Palette (`Ctrl+Shift+P`, or `Cmd+Shift+P` on macOS), run **Git: Clone**, paste `https://github.com/mattmunslow/festival-operations-lab.git` and open the cloned folder.
 
 Or, in a terminal:
 
 ```bash
-git clone <repo-url>
-cd <repo-folder>
+git clone https://github.com/mattmunslow/festival-operations-lab.git
+cd festival-operations-lab
 ```
 
 ## 3. Install the Python packages

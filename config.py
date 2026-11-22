@@ -14,7 +14,7 @@ def get_setting(name):
         raise SystemExit(
             f"Missing setting: {name}\n"
             "Copy .env.example to .env and fill in every value. "
-            "See INSTRUCTIONS.md for where to find each one."
+            "See README.md for where to find each one."
         )
 
     return value

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Sets up the lab on macOS or Linux. On Windows, follow INSTRUCTIONS.md.
+# Sets up the lab on macOS or Linux. On Windows, follow README.md.
 set -e
 
 python3 -m venv .venv
