@@ -1,13 +1,10 @@
-import os
-
-from dotenv import load_dotenv
 from azure.core.credentials import AzureKeyCredential
 from azure.ai.contentunderstanding import ContentUnderstandingClient
 
-load_dotenv()
+from config import get_setting
 
-endpoint = os.environ["CONTENT_UNDERSTANDING_ENDPOINT"]
-key = os.environ["CONTENT_UNDERSTANDING_KEY"]
+endpoint = get_setting("CONTENT_UNDERSTANDING_ENDPOINT")
+key = get_setting("CONTENT_UNDERSTANDING_KEY")
 
 client = ContentUnderstandingClient(
     endpoint=endpoint,

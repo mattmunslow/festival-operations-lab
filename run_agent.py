@@ -1,11 +1,10 @@
-# Before running the sample:
-#    pip install "azure-ai-projects>=2.1.0"
-
 from azure.identity import DefaultAzureCredential
 from azure.ai.projects import AIProjectClient
 
-endpoint = "https://matt-9712-resource.services.ai.azure.com/api/projects/matt-9712-resource-project"
-agent_name = "festival-operations-assistant"
+from config import get_setting
+
+endpoint = get_setting("FOUNDRY_PROJECT_ENDPOINT")
+agent_name = get_setting("FOUNDRY_AGENT_NAME")
 
 
 with (

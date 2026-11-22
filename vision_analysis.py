@@ -3,8 +3,10 @@ import base64
 from azure.identity import DefaultAzureCredential
 from azure.ai.projects import AIProjectClient
 
-endpoint = "https://matt-9712-resource.services.ai.azure.com/api/projects/matt-9712-resource-project"
-model_name = "model-router"
+from config import get_setting
+
+endpoint = get_setting("FOUNDRY_PROJECT_ENDPOINT")
+model_name = get_setting("FOUNDRY_MODEL_DEPLOYMENT")
 
 
 def analyse_image(file_path):

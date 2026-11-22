@@ -1,66 +1,118 @@
-# VS Code for the Web - Microsoft Foundry
+# Festival Operations Assistant: Lab Setup
 
-We've generated a simple development environment for you to play with sample code to create and run the agent that you built in the Microsoft Foundry playground.
+This repo contains the sample code for the Festival Operations Assistant lab. The scripts analyse festival evidence (written feedback, a spoken staff report, a site photo and a supplier invoice) with Azure AI services, then send it to an agent you create in Microsoft Foundry.
 
-The Microsoft Foundry extension provides tools to help you build, test, and deploy AI models and AI Applications directly from VS Code. It offers simplified operations for interacting with your models, agents, and threads without leaving your development environment. Click on the Microsoft Foundry Icon on the left to see more.
+## What you need
 
-Follow the instructions below to get started!
+- An Azure subscription with a Microsoft Foundry resource and project
+- The **Azure AI User** role on the Foundry project, plus permission to view the resource's keys
+- VS Code with the Python extension
+- Git
+- Python 3.10 or later
+- Azure CLI (`az`)
 
-## Open the terminal
+## 1. Deploy a model and create an agent
 
-Press ``Ctrl-` `` &nbsp; to open a terminal window.
+In the [Foundry portal](https://ai.azure.com), open your project, then:
 
-## Run your agent locally
+1. Go to **Models + endpoints** and select **Deploy model**. Deploy `gpt-5` (or `gpt-5-mini`) and note the deployment name.
+2. Go to **Agents** and create a new agent named `festival-operations-assistant`. Select the model you just deployed.
+3. Go to the project **Overview** page and copy the **Project endpoint**.
 
-To run the agent that you created in AI Foundry, and view the output in the terminal run the following command:
+> Don't use `model-router` as the agent's model. It rejects the full evidence package used in this lab.
+
+## 2. Get the code
+
+In VS Code, open the Command Palette (`Ctrl+Shift+P`, or `Cmd+Shift+P` on macOS), run **Git: Clone**, paste the repo URL and open the cloned folder.
+
+Or, in a terminal:
+
+```bash
+git clone <repo-url>
+cd <repo-folder>
+```
+
+## 3. Install the Python packages
+
+Open a terminal in VS Code (``Ctrl+` ``).
+
+**macOS / Linux**
+
+```bash
+./install.sh
+source .venv/bin/activate
+```
+
+**Windows (PowerShell)**
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+Copy-Item .env.example .env
+```
+
+Your prompt shows `(.venv)` when the environment is active. Activate it again in every new terminal.
+
+If VS Code asks which Python interpreter to use, choose the one in `.venv`.
+
+## 4. Fill in your settings
+
+Open `.env` (created from `.env.example`) and fill in every value:
+
+| Setting | Where to find it |
+|---|---|
+| `FOUNDRY_PROJECT_ENDPOINT` | Foundry portal > project **Overview** > **Project endpoint** |
+| `FOUNDRY_AGENT_NAME` | The name of the agent you created |
+| `FOUNDRY_MODEL_DEPLOYMENT` | The deployment name of the model you deployed |
+| `SPEECH_KEY`, `AZURE_LANGUAGE_KEY`, `CONTENT_UNDERSTANDING_KEY` | Azure portal > Foundry resource > **Keys and Endpoint** > **KEY 1** |
+| `SPEECH_REGION` | Same page, **Location/Region** (e.g. `swedencentral`) |
+| `AZURE_LANGUAGE_ENDPOINT` | `https://<resource-name>.cognitiveservices.azure.com/` |
+| `CONTENT_UNDERSTANDING_ENDPOINT` | `https://<resource-name>.services.ai.azure.com/` |
+
+`.env` is ignored by Git, so your keys are never committed.
+
+## 5. Sign in to Azure
+
+The agent and image-analysis scripts use your Entra ID sign-in rather than a key.
+
+```bash
+az login
+```
+
+Sign in with your lab account. If you have more than one tenant, use `az login --tenant <tenant-id>`.
+
+## 6. Run the scripts
+
+Each analysis script can be run on its own:
+
+```bash
+python text_analysis.py       # sentiment, key phrases and entities from festival_feedback.txt
+python speech_analysis.py     # transcribes festival_site_report.wav
+python vision_analysis.py     # describes festival_site.jpg
+python document_analysis.py   # extracts fields from festival_supplier_invoice.pdf
+```
+
+Chat with your agent:
 
 ```bash
 python run_agent.py
 ```
 
-## Update your agent configuration
-
-In the left hand activity bar:
-
-- Open the Microsoft Foundry tab in the navigation bar
-- Under "Resources", expand the "Agents" section and click on the corresponding agent name
-- Click "Open YAML File"
-- Make any changes to the agent definition
-- Update the agent in Microsoft Foundry
-
-## Add, provision and deploy web app that uses the agent
-
-To add a web app that uses your agent, run the next command. When asked what you would like to do with the files, we suggest selecting `Overwrite with versions from template`.
+Run the full app, which gathers all the evidence and asks the agent to compare it:
 
 ```bash
-azd init -t https://github.com/Azure-Samples/get-started-with-ai-agents
+python festival_operations_app.py
 ```
-
-You can provision and deploy this web app using:
-
-```bash
-azd up
-```
-
-To delete the web app and stop incurring any charges, run:
-
-```bash
-azd down
-```
-
-## Continuing on your local desktop
-
-You can keep working locally on VS Code Desktop by clicking "Continue On Desktop..." at the bottom left of this screen. Be sure to take the .env file with you using these steps:
-
-- Right-click the .env file
-- Select "Download"
-- Move the file from your Downloads folder to the local git repo directory
-- For Windows, you will need to rename the file back to .env using right-click "Rename..."
-
-## More examples
-
-Check out [Azure AI Projects client library for Python](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/ai/azure-ai-projects/README.md) for more information on using this SDK.
 
 ## Troubleshooting
 
-- If you are instantiating your client via endpoint on an Microsoft Foundry project, ensure the endpoint is set in the `run_agent` script as `https://{your-foundry-resource-name}.services.ai.azure.com/api/projects/{your-foundry-project-name}`
+| Problem | Fix |
+|---|---|
+| `Missing setting: ...` | That value is empty in `.env`. Fill it in and run again. |
+| `ModuleNotFoundError` | The virtual environment isn't active. Run `source .venv/bin/activate` (macOS/Linux) or `.venv\Scripts\Activate.ps1` (Windows). |
+| `command not found: az` | Install the Azure CLI, then open a new terminal. |
+| `DefaultAzureCredential failed to retrieve a token` | Run `az login` again. |
+| `PermissionDenied` or `401`/`403` from the agent | Your account needs the **Azure AI User** role on the Foundry project. |
+| `Error code: 400 ... There was an issue with your request` from the agent | Make sure the agent uses `gpt-5` or `gpt-5-mini`, not `model-router`. |
+| `NotOpenSSLWarning` from `urllib3` | Harmless. It appears with older macOS system Python. |

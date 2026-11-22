@@ -1,13 +1,10 @@
-import os
-
-from dotenv import load_dotenv
 from azure.core.credentials import AzureKeyCredential
 from azure.ai.textanalytics import TextAnalyticsClient
 
-load_dotenv()
+from config import get_setting
 
-language_endpoint = os.environ["AZURE_LANGUAGE_ENDPOINT"]
-language_key = os.environ["AZURE_LANGUAGE_KEY"]
+language_endpoint = get_setting("AZURE_LANGUAGE_ENDPOINT")
+language_key = get_setting("AZURE_LANGUAGE_KEY")
 
 text_analytics_client = TextAnalyticsClient(
     endpoint=language_endpoint,
