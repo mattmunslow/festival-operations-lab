@@ -42,7 +42,7 @@ cd festival-operations-lab
 
 ## 3. Install the Python packages
 
-Open a terminal in VS Code (``Ctrl+` ``).
+Open a terminal in VS Code (``Ctrl+` ``). On Windows, check that the shell name at the top right of the terminal panel says **PowerShell**. If it says Command Prompt or Git Bash, use the dropdown arrow next to the `+` to open a PowerShell terminal instead. Make sure the terminal is in the `festival-operations-lab` folder.
 
 **macOS / Linux**
 
