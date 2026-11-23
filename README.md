@@ -9,7 +9,15 @@ This repo contains the sample code for the Festival Operations Assistant lab. Th
 - VS Code with the Python extension
 - Git
 - Python 3.10 or later
-- Azure CLI (`az`)
+- Azure CLI (`az`). See below if you don't have it.
+
+To check whether you have the Azure CLI, run `az --version` in a terminal. If the command isn't found, install it:
+
+- **Windows:** `winget install --exact --id Microsoft.AzureCLI`, or use the [MSI installer](https://aka.ms/installazurecliwindows)
+- **macOS:** `brew install azure-cli`
+- **Linux:** follow the [Azure CLI install guide](https://learn.microsoft.com/cli/azure/install-azure-cli-linux)
+
+Then close and reopen your terminal (on Windows, restart VS Code) so it can find `az`. If you can't install software on your machine, ask your IT team to install the Azure CLI for you.
 
 ## 1. Deploy a model and create an agent
 
@@ -111,7 +119,7 @@ python festival_operations_app.py
 |---|---|
 | `Missing setting: ...` | That value is empty in `.env`. Fill it in and run again. |
 | `ModuleNotFoundError` | The virtual environment isn't active. Run `source .venv/bin/activate` (macOS/Linux) or `.venv\Scripts\Activate.ps1` (Windows). |
-| `command not found: az` | Install the Azure CLI, then open a new terminal. |
+| `command not found: az` (macOS/Linux) or `The term 'az' is not recognized` (Windows) | The Azure CLI isn't installed, or your terminal opened before you installed it. Install it (see [What you need](#what-you-need)), then open a new terminal. On Windows, restart VS Code. |
 | `DefaultAzureCredential failed to retrieve a token` | Run `az login` again. |
 | `PermissionDenied` or `401`/`403` from the agent | Your account needs the **Azure AI User** role on the Foundry project. |
 | `Error code: 400 ... There was an issue with your request` from the agent | Make sure the agent uses `gpt-5` or `gpt-5-mini`, not `model-router`. |
