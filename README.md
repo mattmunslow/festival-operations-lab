@@ -4,7 +4,7 @@ This repo contains the sample code for the Festival Operations Assistant lab. Th
 
 ## What you need
 
-- An Azure subscription with a Microsoft Foundry resource and project
+- An Azure subscription with a Microsoft Foundry resource and project, in a region that supports Content Understanding
 - The **Azure AI User** role on the Foundry project, plus permission to view the resource's keys
 - VS Code with the Python extension
 - Git
@@ -18,16 +18,6 @@ To check whether you have the Azure CLI, run `az --version` in a terminal. If th
 - **Linux:** follow the [Azure CLI install guide](https://learn.microsoft.com/cli/azure/install-azure-cli-linux)
 
 Then close and reopen your terminal (on Windows, restart VS Code) so it can find `az`. If you can't install software on your machine, ask your IT team to install the Azure CLI for you.
-
-### Lab provisioning: Content Understanding setup
-
-The invoice script (`document_analysis.py`) uses the Content Understanding `prebuilt-invoice` analyser. It needs model deployments on the Foundry resource before it can run. The lab team sets this up for each student's resource:
-
-1. Make sure the Foundry resource is in a region that supports Content Understanding.
-2. Open [Content Understanding Studio](https://contentunderstanding.ai.azure.com) and go to the settings wheel, add a new resource for the student's Foundry resource.
-3. Select **Enable autodeployment for required models if no defaults are available**. This deploys the completion, mini and embedding models the prebuilt analysers use, and sets them as the resource defaults.
-
-The `gpt-5` model that students deploy for their agent doesn't replace this. Content Understanding only uses the models set as its defaults. For the supported models, see [Model deployment options for Content Understanding analyzers](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/models-deployments).
 
 ## 1. Get the code
 
