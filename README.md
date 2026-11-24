@@ -74,23 +74,7 @@ Your prompt shows `(.venv)` when the environment is active. Activate it again in
 
 If VS Code asks which Python interpreter to use, choose the one in `.venv`.
 
-## 4. Fill in your settings
-
-Open `.env` (created from `.env.example`) and fill in every value:
-
-| Setting | Where to find it |
-|---|---|
-| `FOUNDRY_PROJECT_ENDPOINT` | Foundry portal > project **Overview** > **Project endpoint** |
-| `FOUNDRY_AGENT_NAME` | The name of the agent you created |
-| `FOUNDRY_MODEL_DEPLOYMENT` | The deployment name of the model you deployed |
-| `SPEECH_KEY`, `AZURE_LANGUAGE_KEY`, `CONTENT_UNDERSTANDING_KEY` | Azure portal > Foundry resource > **Keys and Endpoint** > **KEY 1** |
-| `SPEECH_REGION` | Same page, **Location/Region** (e.g. `swedencentral`) |
-| `AZURE_LANGUAGE_ENDPOINT` | `https://<resource-name>.cognitiveservices.azure.com/` |
-| `CONTENT_UNDERSTANDING_ENDPOINT` | `https://<resource-name>.services.ai.azure.com/` |
-
-`.env` is ignored by Git, so your keys are never committed.
-
-## 5. Sign in to Azure
+## 4. Sign in to Azure
 
 The agent and image-analysis scripts use your Entra ID sign-in rather than a key.
 
@@ -99,29 +83,6 @@ az login
 ```
 
 Sign in with your lab account. If you have more than one tenant, use `az login --tenant <tenant-id>`.
-
-## 6. Run the scripts
-
-Each analysis script can be run on its own:
-
-```bash
-python text_analysis.py       # sentiment, key phrases and entities from festival_feedback.txt
-python speech_analysis.py     # transcribes festival_site_report.wav
-python vision_analysis.py     # describes festival_site.jpg
-python document_analysis.py   # extracts fields from festival_supplier_invoice.pdf
-```
-
-Chat with your agent:
-
-```bash
-python run_agent.py
-```
-
-Run the full app, which gathers all the evidence and asks the agent to compare it:
-
-```bash
-python festival_operations_app.py
-```
 
 ## Troubleshooting
 
