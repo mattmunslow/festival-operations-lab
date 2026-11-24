@@ -24,7 +24,7 @@ Then close and reopen your terminal (on Windows, restart VS Code) so it can find
 The invoice script (`document_analysis.py`) uses the Content Understanding `prebuilt-invoice` analyser. It needs model deployments on the Foundry resource before it can run. The lab team sets this up for each student's resource:
 
 1. Make sure the Foundry resource is in a region that supports Content Understanding.
-2. Open [Content Understanding Studio](https://contentunderstanding.ai.azure.com) and go to the settings for the student's Foundry resource.
+2. Open [Content Understanding Studio](https://contentunderstanding.ai.azure.com) and go to the settings wheel, add a new resource for the student's Foundry resource.
 3. Select **Enable autodeployment for required models if no defaults are available**. This deploys the completion, mini and embedding models the prebuilt analysers use, and sets them as the resource defaults.
 
 The `gpt-5` model that students deploy for their agent doesn't replace this. Content Understanding only uses the models set as its defaults. For the supported models, see [Model deployment options for Content Understanding analyzers](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/models-deployments).
