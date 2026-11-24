@@ -27,19 +27,9 @@ The invoice script (`document_analysis.py`) uses the Content Understanding `preb
 2. Open [Content Understanding Studio](https://contentunderstanding.ai.azure.com) and go to the settings for the student's Foundry resource.
 3. Select **Enable autodeployment for required models if no defaults are available**. This deploys the completion, mini and embedding models the prebuilt analysers use, and sets them as the resource defaults.
 
-The `gpt-5` deployment from step 1 doesn't replace this. Content Understanding only uses the models set as its defaults. For the supported models, see [Model deployment options for Content Understanding analyzers](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/models-deployments).
+The `gpt-5` model that students deploy for their agent doesn't replace this. Content Understanding only uses the models set as its defaults. For the supported models, see [Model deployment options for Content Understanding analyzers](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/models-deployments).
 
-## 1. Deploy a model and create an agent
-
-In the [Foundry portal](https://ai.azure.com), open your project, then:
-
-1. Go to **Models + endpoints** and select **Deploy model**. Deploy `gpt-5` (or `gpt-5-mini`) and note the deployment name.
-2. Go to **Agents** and create a new agent named `festival-operations-assistant`. Select the model you just deployed.
-3. Go to the project **Overview** page and copy the **Project endpoint**.
-
-> Don't use `model-router` as the agent's model. It rejects the full evidence package used in this lab.
-
-## 2. Get the code
+## 1. Get the code
 
 In VS Code, open the Command Palette (`Ctrl+Shift+P`, or `Cmd+Shift+P` on macOS), run **Git: Clone**, paste `https://github.com/mattmunslow/festival-operations-lab.git` and open the cloned folder.
 
@@ -50,7 +40,7 @@ git clone https://github.com/mattmunslow/festival-operations-lab.git
 cd festival-operations-lab
 ```
 
-## 3. Install the Python packages
+## 2. Install the Python packages
 
 Open a terminal in VS Code (``Ctrl+` ``). On Windows, check that the shell name at the top right of the terminal panel says **PowerShell**. If it says Command Prompt or Git Bash, use the dropdown arrow next to the `+` to open a PowerShell terminal instead. Make sure the terminal is in the `festival-operations-lab` folder.
 
@@ -74,7 +64,7 @@ Your prompt shows `(.venv)` when the environment is active. Activate it again in
 
 If VS Code asks which Python interpreter to use, choose the one in `.venv`.
 
-## 4. Sign in to Azure
+## 3. Sign in to Azure
 
 The agent and image-analysis scripts use your Entra ID sign-in rather than a key.
 
